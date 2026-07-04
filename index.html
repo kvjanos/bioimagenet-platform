@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioImageNet-UK | The Independent Validation Layer for Bioimage AI</title>
+    <style>
+        :root {
+            --bg-main: #060913;
+            --bg-card: #0f1626;
+            --border-color: #1b263b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-glow: rgba(0, 242, 254, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navbar */
+        nav {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 0;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background: rgba(6, 9, 19, 0.8);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.03em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: var(--bg-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 242, 254, 0.05);
+        }
+
+        /* Hero Section */
+        header.hero {
+            padding: 12rem 0 6rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        header.hero::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .badge {
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.04em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.35rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            font-weight: 400;
+        }
+
+        /* Section Global */
+        section {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Core Moat Section */
+        .moat-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .moat-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .moat-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .moat-stat {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Pillars Section */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .pillar-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: rgba(0, 242, 254, 0.4);
+        }
+
+        .pillar-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .pillar-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pillar-features {
+            list-style: none;
+        }
+
+        .pillar-features li {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pillar-features li::before {
+            content: '▪';
+            color: var(--accent-cyan);
+        }
+
+        /* Workflow Section */
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .workflow-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .workflow-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .workflow-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 0;
+            background: #04060d;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            max-width: 400px;
+            font-size: 0.95rem;
+        }
+
+        .footer-meta {
+            text-align: right;
+        }
+
+        .address-block {
+            color: var(--text-secondary);
+            font-style: normal;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: flex-end;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(27, 38, 59, 0.4);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #4b5563;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Layouts */
+        @media (max-width: 968px) {
+            h1 { font-size: 2.8rem; }
+            .moat-grid, .pillars-grid, .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+            .workflow-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-meta {
+                text-align: left;
+            }
+            .footer-links {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .workflow-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">BioImageNet-UK</div>
+            <div class="nav-links">
+                <a href="#moat">Core Moat</a>
+                <a href="#focus">Platform Focus</a>
+                <a href="#workflow">Audit Pipeline</a>
+                <a href="mailto:info@bioimagenet.com" class="btn btn-outline">Contact Infrastructure</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container">
+            <span class="badge">National RFP Winner // DSIT & Renaissance Philanthropy Endorsed</span>
+            <h1>The Independent Validation Layer<br>for Bioimage AI</h1>
+            <p>We independently validate whether image-based AI datasets reflect real biology or instrumentation artefacts before investment, partnership, or acquisition.</p>
+            <a href="mailto:info@bioimagenet.com" class="btn">Request Enterprise Audit</a>
+        </div>
+    </header>
+
+    <!-- The Core Moat Section -->
+    <section id="moat">
+        <div class="container">
+            <div class="moat-grid">
+                <div class="moat-text">
+                    <div class="badge" style="margin-bottom: 1rem;">Sovereign Data Moat</div>
+                    <h3>Eliminating Systemic Instrumentation Footprints</h3>
+                    <p>TechBio evaluation frameworks frequently fail due to hidden operational batch effects and optical system contamination. Our computational layer mathematically isolates biological reality from institutional hardware biases.</p>
+                    <p>Utilizing our proprietary **Domain-Independent Clean-Room Protocol**, we strip away persistent multi-well plate edge anomalies and systemic scale-bar artifacts, ensuring machine learning models train exclusively on cell-autonomous signals.</p>
+                </div>
+                <div class="moat-stat">
+                    <div class="stat-number">16 Yrs</div>
+                    <div class="stat-label">Curated Phenotypic Ground Truth Asset</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Focus Section -->
+    <section id="focus">
+        <div class="container">
+            <div class="section-header">
+                <h2>Platform Focus Architecture</h2>
+                <p>Enterprise validation infrastructures designed for biopharmaceutical platforms and technical due diligence.</p>
+            </div>
+            <div class="pillars-grid">
+                <div class="pillar-card">
+                    <div class="pillar-icon">D</div>
+                    <h3>Frontier AI Datasets</h3>
+                    <p>Licensing access to deep, cross-platform morphological database architectures optimized for foundational model training.</p>
+                    <ul class="pillar-features">
+                        <li>Highly curated tabular feature matrices</li>
+                        <li>Multi-platform instrument normalization</li>
+                        <li>Verified biological ground-truth benchmarks</li>
+                    </ul>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-icon">A</div>
+                    <h3>Corporate Biotech Advisory</h3>
+                    <p>Systemic data-integrity due diligence and structural readiness scoring tailored for investment milestones and M&A transactions.</p>
+                    <ul class="pillar-features">
+                        <li>GxP-ready Data Integrity Scorecards</li>
+                        <li>Independent third-party validation reports</li>
+                        <li>Pre-acquisition risk mitigation mapping</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 72-Hour Audit Workflow Section -->
+    <section id="workflow">
+        <div class="container">
+            <div class="section-header">
+                <h2>The 72-Hour Audit Workflow</h2>
+                <p>A rigorous, automated end-to-end deployment path from raw asset ingests to decision-ready executive scores.</p>
+            </div>
+            <div class="workflow-grid">
+                <div class="workflow-card">
+                    <span class="step-number">Phase 01</span>
+                    <h3>Data Intake & Metadata Review</h3>
+                    <p>Secure pipeline transmission, ingestion verification, and structural annotation consistency checks.</p>
+                </div>
+                <div class="workflow-card">
+                    <span class="step-number">Phase 02</span>
+                    <h3>QC & Artefact Detection</h3>
+                    <p>Algorithmic screening to isolate hardware batch anomalies, optical field drifts, and physical aberrations.</p>
+                </div>
+                <div class="workflow-card">
+                    <span class="step-number">Phase 03</span>
+                    <h3>Biological Plausibility Check</h3>
+                    <p>Cross-referencing phenotypic signatures against our reference matrices to isolate true cellular morphologies.</p>
+                </div>
+                <div class="workflow-card">
+                    <span class="step-number">Phase 04</span>
+                    <h3>Final Diligence Report</h3>
+                    <p>Delivery of the certified Data Integrity Scorecard with actionable, board-ready asset metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">BioImageNet-UK Ltd</div>
+                    <p>The sovereign validation framework for high-content image analytics and predictive biopharma models.</p>
+                </div>
+                <div class="footer-meta">
+                    <address class="address-block">
+                        <strong>BioImageNet-UK Ltd</strong><br>
+                        City Road<br>
+                        London, United Kingdom
+                    </address>
+                    <div class="footer-links">
+                        <a href="mailto:info@bioimagenet.com">info@bioimagenet.com</a>
+                        <a href="#" target="_blank">
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display:inline-block;vertical-align:middle;">
+                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H3.243v7.225h1.7 FinchzM3.885 5.253c.508 0 .93-.412.93-.921a.927.927 0 0 0-.93-.92c-.51 0-.931.414-.931.92 0 .509.421.921.931.921zm9.648 8.143v-3.977c0-2.131-1.135-3.122-2.653-3.122-1.224 0-1.766.672-2.071 1.149v-.987H7.239c.024.364 0 7.225 0 7.225h1.699V9.674c0-.407.029-.814.149-1.106.328-.814 1.073-1.657 2.328-1.657 1.64 0 2.297 1.25 2.297 3.079v3.256h1.696z"/>
+                            </svg>
+                            LinkedIn Corporate Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2026 BioImageNet-UK Ltd. All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
