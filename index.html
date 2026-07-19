@@ -427,7 +427,7 @@
                 <a href="#moat">Core Moat</a>
                 <a href="#focus">Platform Focus</a>
                 <a href="#workflow">Audit Pipeline</a>
-                <a href="mailto:info@bioimagenet.com" class="btn btn-outline">Contact Infrastructure</a>
+                <a href="#" class="btn btn-outline secure-email-link">Contact Infrastructure</a>
             </div>
         </div>
     </nav>
@@ -438,7 +438,7 @@
             <span class="badge">National RFP Winner // DSIT & Renaissance Philanthropy Endorsed</span>
             <h1>The Independent Validation Layer<br>for Bioimage AI</h1>
             <p>We independently validate whether image-based AI datasets reflect real biology or instrumentation artefacts before investment, partnership, or acquisition.</p>
-            <a href="mailto:info@bioimagenet.com" class="btn">Request Enterprise Audit</a>
+            <a href="#" class="btn secure-email-link">Request Enterprise Audit</a>
         </div>
     </header>
 
@@ -535,14 +535,14 @@
                 <div class="footer-meta">
                     <address class="address-block">
                         <strong>BioImageNet-UK Ltd</strong><br>
-                        City Road<br>
-                        London, United Kingdom
+                        124 City Road<br>
+                        London, EC1V 2NX, United Kingdom
                     </address>
                     <div class="footer-links">
-                        <a href="mailto:info@bioimagenet.com">info@bioimagenet.com</a>
+                        <a href="#" class="secure-email-link" data-set-text="true"></a>
                         <a href="#" target="_blank">
                             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="display:inline-block;vertical-align:middle;">
-                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H3.243v7.225h1.7 FinchzM3.885 5.253c.508 0 .93-.412.93-.921a.927.927 0 0 0-.93-.92c-.51 0-.931.414-.931.92 0 .509.421.921.931.921zm9.648 8.143v-3.977c0-2.131-1.135-3.122-2.653-3.122-1.224 0-1.766.672-2.071 1.149v-.987H7.239c.024.364 0 7.225 0 7.225h1.699V9.674c0-.407.029-.814.149-1.106.328-.814 1.073-1.657 2.328-1.657 1.64 0 2.297 1.25 2.297 3.079v3.256h1.696z"/>
+                                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H3.243v7.225h1.7V6.169zm-1.058-8.143c.508 0 .93-.412.93-.921a.927.927 0 0 0-.93-.92c-.51 0-.931.414-.931.92 0 .509.421.921.931.921zm9.648 8.143v-3.977c0-2.131-1.135-3.122-2.653-3.122-1.224 0-1.766.672-2.071 1.149v-.987H7.239c.024.364 0 7.225 0 7.225h1.699V9.674c0-.407.029-.814.149-1.106.328-.814 1.073-1.657 2.328-1.657 1.64 0 2.297 1.25 2.297 3.079v3.256h1.696z"/>
                             </svg>
                             LinkedIn Corporate Profile
                         </a>
@@ -555,5 +555,21 @@
         </div>
     </footer>
 
+    <!-- Obfuscation Script to protect against spambots -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var u = "info";
+            var d = "bioimagenet.com";
+            var fullEmail = u + "@" + d;
+            
+            var emailLinks = document.querySelectorAll(".secure-email-link");
+            emailLinks.forEach(function(link) {
+                link.setAttribute("href", "mailto:" + fullEmail);
+                if (link.getAttribute("data-set-text") === "true") {
+                    link.textContent = fullEmail;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
